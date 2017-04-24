@@ -7,8 +7,8 @@ from cloudstorage.errors import NotFoundError
 
 from google.appengine.api import app_identity
 
-from src import error
-from src.storage import StorageProvider
+from src.cloud_ftp import error
+from src.cloud_ftp.storage import StorageProvider
 
 
 class GCSStorageProvider(StorageProvider):

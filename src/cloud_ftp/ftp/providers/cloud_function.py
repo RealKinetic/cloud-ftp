@@ -9,7 +9,7 @@ import json
 from google.appengine.api import app_identity
 from google.appengine.api import urlfetch
 
-from src.ftp import FTPProvider
+from src.cloud_ftp.ftp import FTPProvider
 
 
 class CloudFunctionProvider(FTPProvider):
