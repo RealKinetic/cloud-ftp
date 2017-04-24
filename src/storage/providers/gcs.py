@@ -2,7 +2,8 @@
 Reaches out to GCS to download a file.  Bucket may or may not be specified.  If
 not specified, default bucket is used.
 """
-import cloudstorage as gcs
+import cloudstorage
+from cloudstorage.errors import NotFoundError
 
 from google.appengine.api import app_identity
 
@@ -45,8 +46,8 @@ class GCSStorageProvider(StorageProvider):
         """
         path = self.create_path(name)
         try:
-            return gcs.open(path)
-        except gcs.errors.NotFoundError:
+            return cloudstorage.open(path)
+        except NotFoundError:
             raise error.FileNotFoundError(
                 'unable to find gcs file: {}'.format(path)
             )
