@@ -3,8 +3,9 @@ import unittest
 
 import mock
 
-from src.cloud_ftp.ftp import Context
-from src.cloud_ftp.ftp.providers.cloud_function import CloudFunctionProvider
+from cloud_ftp import error
+from cloud_ftp.ftp import Context
+from cloud_ftp.ftp.providers.cloud_function import CloudFunctionProvider, DEFAULT_DEADLINE
 
 
 class CloudFunctionTestCase(unittest.TestCase):
@@ -36,9 +37,11 @@ class CloudFunctionTestCase(unittest.TestCase):
         response = mock.MagicMock()
         response.status_code = 404
 
-        self.assertRaises(ValueError, p.verify_response, ctx, response)
+        self.assertRaises(
+            error.FileNotFoundError, p.verify_response, ctx, response
+        )
 
-    @mock.patch('src.cloud_ftp.ftp.providers.cloud_function.urlfetch')
+    @mock.patch('cloud_ftp.ftp.providers.cloud_function.urlfetch')
     def test_move_file(self, url_fetch):
         ctx = Context('file', 'host', 'user', 'pass')
         p = CloudFunctionProvider('url', bucket_name='bucket')
@@ -51,4 +54,6 @@ class CloudFunctionTestCase(unittest.TestCase):
             'url',
             payload=p.make_data(ctx),
             headers={"Content-Type": "application/json"},
+            deadline=DEFAULT_DEADLINE,
+            method=url_fetch.POST,
         )

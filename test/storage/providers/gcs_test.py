@@ -4,8 +4,8 @@ import cloudstorage
 
 import mock
 
-from src.cloud_ftp import error
-from src.cloud_ftp.storage.providers.gcs import GCSStorageProvider
+from cloud_ftp import error
+from cloud_ftp.storage.providers.gcs import GCSStorageProvider
 
 
 class GCSTestCase(unittest.TestCase):
@@ -14,7 +14,7 @@ class GCSTestCase(unittest.TestCase):
         path = p.create_path('name')
         self.assertEqual('/bucket/name', path)
 
-    @mock.patch('src.cloud_ftp.storage.providers.gcs.cloudstorage')
+    @mock.patch('cloud_ftp.storage.providers.gcs.cloudstorage')
     def test_fetch_ok(self, gcs):
         p = GCSStorageProvider(bucket='bucket')
         gcs.open.return_value = 5
@@ -25,7 +25,7 @@ class GCSTestCase(unittest.TestCase):
             p.create_path('name'),
         )
 
-    @mock.patch('src.cloud_ftp.storage.providers.gcs.cloudstorage')
+    @mock.patch('cloud_ftp.storage.providers.gcs.cloudstorage')
     def test_fetch_not_found(self, gcs):
         gcs.open.side_effect = cloudstorage.errors.NotFoundError()
         p = GCSStorageProvider(bucket='bucket')
