@@ -6,11 +6,10 @@ file from an FTP server to GCS.
 """
 import json
 
-import cloudstorage
-
 from google.appengine.api import app_identity
 from google.appengine.api import urlfetch
 
+from cloud_ftp import error
 from cloud_ftp.ftp import FTPProvider
 
 # defines the time, in seconds, we wait for a cloud ftp function response
@@ -87,6 +86,9 @@ class CloudFunctionProvider(FTPProvider):
         :rtype: str
         """
         if response.status_code != 200:
+            if response.status_code == 404:
+                raise error.FileNotFoundError()
+
             # TODO: correct this to be specific
             raise ValueError('response: {}'.format(response.status_code))
 

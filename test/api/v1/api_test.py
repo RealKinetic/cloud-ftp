@@ -2,9 +2,9 @@ import unittest
 
 import mock
 
-from src.cloud_ftp.api import v1 as api
+from cloud_ftp.api import v1 as api
 
-from src.cloud_ftp.ftp import Context
+from cloud_ftp.ftp import Context
 
 
 class ApiTestCase(unittest.TestCase):
