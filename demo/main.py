@@ -10,7 +10,7 @@ from cloud_ftp.ftp.providers.cloud_function import CloudFunctionProvider
 from cloud_ftp.storage.providers.gcs import GCSStorageProvider
 
 
-common.set_access_token('ya29.Gl02BG-Sxf2bfLoLJebSZn23gbbDMXNTn0xMLKiUgx3b0Wyz-OTyYIH5w20cwMjipJIXEb3058G4Yu6TcPnLKcDKp_Lmat0OVcKvlaGU_g2tPRWt3RVUGm01_Vtfz9Y')
+common.set_access_token('your access token here... `gsutil -d ls`')
 
 
 class MainPage(webapp2.RequestHandler):
