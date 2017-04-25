@@ -1,11 +1,16 @@
 import json
 
+from cloudstorage import common
+
 import webapp2
 
-from src.api import v1 as api
-from src.ftp import Context
-from src.ftp.providers.cloud_function import CloudFunctionProvider
-from src.storage.providers.gcs import GCSStorageProvider
+from cloud_ftp.api import v1 as api
+from cloud_ftp.ftp import Context
+from cloud_ftp.ftp.providers.cloud_function import CloudFunctionProvider
+from cloud_ftp.storage.providers.gcs import GCSStorageProvider
+
+
+common.set_access_token('ya29.Gl02BG-Sxf2bfLoLJebSZn23gbbDMXNTn0xMLKiUgx3b0Wyz-OTyYIH5w20cwMjipJIXEb3058G4Yu6TcPnLKcDKp_Lmat0OVcKvlaGU_g2tPRWt3RVUGm01_Vtfz9Y')
 
 
 class MainPage(webapp2.RequestHandler):
@@ -26,7 +31,11 @@ class MainPage(webapp2.RequestHandler):
 
         file.close()
 
-        return {'data': value}
+        self.response.headers['Content-Type'] = 'application/json'
+        obj = {
+            'data': value,
+        }
+        self.response.out.write(json.dumps(obj))
 
     def make_context(self, **kwargs):
         return Context(
