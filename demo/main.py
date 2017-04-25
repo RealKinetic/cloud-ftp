@@ -1,3 +1,5 @@
+# Copyright 2017 Real Kinetic, LLC. All Rights Reserved.
+
 import json
 
 from cloudstorage import common

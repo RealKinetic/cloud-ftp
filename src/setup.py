@@ -1,3 +1,5 @@
+# Copyright 2017 Real Kinetic, LLC. All Rights Reserved.
+
 from distutils.core import setup
 
 setup(
