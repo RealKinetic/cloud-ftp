@@ -6,10 +6,15 @@ file from an FTP server to GCS.
 """
 import json
 
+import cloudstorage
+
 from google.appengine.api import app_identity
 from google.appengine.api import urlfetch
 
 from cloud_ftp.ftp import FTPProvider
+
+# defines the time, in seconds, we wait for a cloud ftp function response
+DEFAULT_DEADLINE = 30
 
 
 class CloudFunctionProvider(FTPProvider):
@@ -46,8 +51,11 @@ class CloudFunctionProvider(FTPProvider):
         response = urlfetch.fetch(
             self._url,
             payload=self.make_data(ctx),
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
+            method=urlfetch.POST,
+            deadline=DEFAULT_DEADLINE,
         )
+        # ensure we got the correct response
         return self.verify_response(ctx, response)
 
     def make_data(self, ctx):
@@ -80,6 +88,6 @@ class CloudFunctionProvider(FTPProvider):
         """
         if response.status_code != 200:
             # TODO: correct this to be specific
-            raise ValueError('incorrect response received')
+            raise ValueError('response: {}'.format(response.status_code))
 
         return ctx.file_name
