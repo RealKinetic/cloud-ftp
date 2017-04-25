@@ -89,6 +89,9 @@ class CloudFunctionProvider(FTPProvider):
             if response.status_code == 404:
                 raise error.FileNotFoundError()
 
+            if response.status_code == 401:
+                raise error.UnauthorizedError()
+
             # TODO: correct this to be specific
             raise ValueError('response: {}'.format(response.status_code))
 

@@ -41,6 +41,16 @@ class CloudFunctionTestCase(unittest.TestCase):
             error.FileNotFoundError, p.verify_response, ctx, response
         )
 
+    def test_verify_unauthorized_error(self):
+        ctx = Context('file', 'host', 'user', 'pass')
+        p = CloudFunctionProvider('url', bucket_name='bucket')
+        response = mock.MagicMock()
+        response.status_code = 401
+
+        self.assertRaises(
+            error.UnauthorizedError, p.verify_response, ctx, response
+        )
+
     def test_verify_generic_error(self):
         ctx = Context('file', 'host', 'user', 'pass')
         p = CloudFunctionProvider('url', bucket_name='bucket')
