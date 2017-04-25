@@ -31,7 +31,7 @@ class CloudFunctionTestCase(unittest.TestCase):
         result = p.verify_response(ctx, response)
         self.assertEqual('file', result)
 
-    def test_verify_error(self):
+    def test_verify_not_found_error(self):
         ctx = Context('file', 'host', 'user', 'pass')
         p = CloudFunctionProvider('url', bucket_name='bucket')
         response = mock.MagicMock()
@@ -39,6 +39,16 @@ class CloudFunctionTestCase(unittest.TestCase):
 
         self.assertRaises(
             error.FileNotFoundError, p.verify_response, ctx, response
+        )
+
+    def test_verify_generic_error(self):
+        ctx = Context('file', 'host', 'user', 'pass')
+        p = CloudFunctionProvider('url', bucket_name='bucket')
+        response = mock.MagicMock()
+        response.status_code = 500
+
+        self.assertRaises(
+            ValueError, p.verify_response, ctx, response
         )
 
     @mock.patch('cloud_ftp.ftp.providers.cloud_function.urlfetch')
