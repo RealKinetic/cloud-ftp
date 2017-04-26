@@ -1,10 +1,11 @@
 # Copyright 2017 Real Kinetic, LLC. All Rights Reserved.
 
 from distutils.core import setup
+from setuptools import find_packages
 
 setup(
     name = 'cloud_ftp',
-    packages = ['cloud_ftp'],
+    packages = find_packages(),
     version = 'v1.0.0',
     description = 'Convenience wrapper for downloading FTP files on Google App Engine',
     author = 'Real Kinetic',
